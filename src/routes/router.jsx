@@ -1,4 +1,4 @@
-import {createBrowserRouter} from 'react-router-dom'
+import {createBrowserRouter, Navigate} from 'react-router-dom'
 import HomeLayout from '../layouts/HomeLayout';
 
 const router = createBrowserRouter([
@@ -6,6 +6,10 @@ const router = createBrowserRouter([
         path: '/',
         element: <HomeLayout></HomeLayout>,
         children: [
+            {
+                path: '',
+                element: <Navigate to={'/category/01'}></Navigate>
+            },
             {
                 path: '/category/:id',
                 element: <h1>This is Main Content</h1>,
