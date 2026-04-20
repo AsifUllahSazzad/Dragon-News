@@ -1,0 +1,33 @@
+.marquee {
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: scroll 25s linear infinite;
+}
+
+/* spacing between links */
+.item {
+  display: inline-block;
+  padding-right: 60px;
+  white-space: nowrap;
+}
+
+/* smooth movement */
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* pause on hover */
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
