@@ -2,7 +2,7 @@ import { FaRegBookmark, FaShareAlt, FaStar, FaEye } from "react-icons/fa";
 
 const NewsCard = ({news = {}}) => {
 
-    const {author, title, thumbnail_url, details, total_view, rating} = news;
+    const {author, title, image_url, details, total_view, rating} = news;
 
     return (
         <div className="card bg-base-100 shadow-md p-4 space-y-4">
@@ -36,9 +36,9 @@ const NewsCard = ({news = {}}) => {
 
       {/* Image */}
       <img
-        src={thumbnail_url}
+        src={image_url}
         alt=""
-        className="rounded-lg w-full object-contain h-100"
+        className="w-full object-cover"
       />
 
       {/* Details */}
