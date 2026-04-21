@@ -4,7 +4,6 @@ import Navbar from "../components/Navbar";
 import { Outlet } from "react-router-dom";
 import LatestNews from "../components/LatestNews";
 import LeftSide from "../components/layout-components/LeftSide";
-import MainContent from "../components/layout-components/MainContent";
 import RightSide from "../components/layout-components/RightSide";
 import FindUs from "../components/FindUs";
 import QZone from "../components/QZone";
@@ -30,7 +29,7 @@ const HomeLayout = () => {
         </aside>
 
         <section className="col-span-6">
-          <MainContent></MainContent>
+          <Outlet></Outlet>
         </section>
 
         <aside className="col-span-3 space-y-5">
