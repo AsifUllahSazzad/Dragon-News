@@ -1,34 +1,22 @@
 import React from "react";
-import Header from "../components/Header";
 import Navbar from "../components/Navbar";
-import { Outlet } from "react-router-dom";
-import LatestNews from "../components/LatestNews";
-import LeftSide from "../components/layout-components/LeftSide";
+import Header from "../components/Header";
+import NewsDetails from "../components/pages/NewsDetails";
 import RightSide from "../components/layout-components/RightSide";
 import FindUs from "../components/FindUs";
 import QZone from "../components/QZone";
+import { Outlet } from "react-router-dom";
 
-const HomeLayout = () => {
+const SingleNewsLayout = () => {
+    
   return (
     <div className="container mx-auto space-y-5">
-      <header className="space-y-5">
+      <header>
         <Header></Header>
-
-        <section>
-          <LatestNews></LatestNews>
-        </section>
       </header>
 
-      <nav>
-        <Navbar></Navbar>
-      </nav>
-
       <main className="grid md:grid-cols-12 gap-5">
-        <aside className="col-span-3">
-          <LeftSide></LeftSide>
-        </aside>
-
-        <section className="col-span-6">
+        <section className="col-span-9">
           <Outlet></Outlet>
         </section>
 
@@ -42,4 +30,4 @@ const HomeLayout = () => {
   );
 };
 
-export default HomeLayout;
+export default SingleNewsLayout;

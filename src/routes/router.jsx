@@ -4,6 +4,8 @@ import CategoryNews from "../components/pages/CategoryNews";
 import AuthLayout from "../layouts/AuthLayout";
 import Login from "../components/pages/Login";
 import Register from "../components/pages/Register";
+import SingleNewsLayout from "../layouts/SingleNewsLayout";
+import NewsDetails from "../components/pages/NewsDetails";
 
 const router = createBrowserRouter([
   {
@@ -22,16 +24,27 @@ const router = createBrowserRouter([
             `https://openapi.programming-hero.com/api/news/category/${params.id}`,
           );
 
-          const data = res.json();
-
-          return data;
+          return await res.json();
         },
       },
     ],
   },
   {
-    path: "/news",
-    element: <h1>News</h1>,
+    path: "/news/:id",
+    element: <SingleNewsLayout></SingleNewsLayout>,
+    children: [
+      {
+        index: true,
+        element: <NewsDetails></NewsDetails>,
+        loader: async ({ params }) => {
+          const res = await fetch(
+            `https://openapi.programming-hero.com/api/news/${params.id}`,
+          );
+
+          return await res.json();
+        },
+      },
+    ],
   },
   {
     path: "/auth",
