@@ -1,36 +1,78 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../Provider/AuthProvider";
 
 const Login = () => {
-    return (
-       <div className="min-h-screen flex justify-center items-center">
-  <div className="bg-base-100 w-full max-w-lg p-10">
-    <div className="card-body">
-      <h1 className="text-center text-[#403F3F] font-semibold text-4xl mb-2">
-        Login your account
-      </h1>
+  const { LogIn, setUser } = useContext(AuthContext);
 
-      <div className="border-t w-full my-6 text-[#E7E7E7]"></div>
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-      <form className="fieldset">
-        <label className="label text-lg font-semibold text-[#403F3F]">Email</label>
-        <input type="email" className="input w-full bg-[#F3F3F3] placeholder:text-[#9F9F9F]" placeholder="Enter your email address" />
+    const form = new FormData(e.target);
+    const email = form.get("email");
+    const password = form.get("password");
 
-        <label className="label text-lg font-semibold text-[#403F3F]">Password</label>
-        <input type="password" className="input w-full bg-[#F3F3F3] placeholder:text-[#9F9F9F]" placeholder="Enter your password" />
+    LogIn(email, password)
+      .then((result) => {
+        setUser(result.user);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
 
-        <div>
-          <a className="link link-hover">Forgot password?</a>
+        alert(errorCode)
+      })
+  };
+
+  return (
+    <div className="min-h-screen flex justify-center items-center">
+      <div className="bg-base-100 w-full max-w-lg p-10">
+        <div className="card-body">
+          <h1 className="text-center text-[#403F3F] font-semibold text-4xl mb-2">
+            Login your account
+          </h1>
+
+          <div className="border-t w-full my-6 text-[#E7E7E7]"></div>
+
+          <form onSubmit={handleSubmit} className="fieldset">
+            <label className="label text-lg font-semibold text-[#403F3F]">
+              Email
+            </label>
+            <input
+              name="email"
+              type="email"
+              required
+              className="input w-full bg-[#F3F3F3] placeholder:text-[#9F9F9F]"
+              placeholder="Enter your email address"
+            />
+
+            <label className="label text-lg font-semibold text-[#403F3F]">
+              Password
+            </label>
+            <input
+              name="password"
+              required
+              type="password"
+              className="input w-full bg-[#F3F3F3] placeholder:text-[#9F9F9F]"
+              placeholder="Enter your password"
+            />
+
+            <div>
+              <a className="link link-hover">Forgot password?</a>
+            </div>
+
+            <button className="btn btn-neutral mt-4">Login</button>
+          </form>
         </div>
-
-        <button className="btn btn-neutral mt-4">Login</button>
-      </form>
+        <p className="text-center text-[#706F6F] font-semibold">
+          Dont’t Have An Account ?{" "}
+          <Link to={"/auth/register"} className="text-red-400">
+            Register
+          </Link>
+        </p>
+      </div>
     </div>
-    <p className='text-center text-[#706F6F] font-semibold'>Dont’t Have An Account ? <Link to={'/auth/register'} className='text-red-400'>Register</Link></p>
-
-  </div>
-</div>
-    );
+  );
 };
 
 export default Login;
