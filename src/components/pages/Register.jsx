@@ -1,9 +1,12 @@
 import { useContext } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Register = () => {
   const { createNewUser, setUser } = useContext(AuthContext);
+
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -18,6 +21,7 @@ const Register = () => {
     createNewUser(email, password)
       .then((result) => {
         setUser(result.user);
+        navigate(location.state?.from?.pathname || '/');
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -85,7 +89,9 @@ const Register = () => {
         </div>
         <p className="text-center text-[#706F6F] font-semibold">
           Allready have an account?{" "}
-          <Link to={"/auth/login"} className="text-red-400">
+          <Link to={"/auth/login"} 
+          state={location.state}
+          className="text-red-400">
             Login
           </Link>
         </p>

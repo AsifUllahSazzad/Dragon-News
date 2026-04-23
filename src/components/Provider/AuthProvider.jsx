@@ -3,6 +3,7 @@ import {
   createUserWithEmailAndPassword,
   getAuth,
   onAuthStateChanged,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
@@ -40,12 +41,18 @@ const AuthProvider = ({ children }) => {
     return signInWithEmailAndPassword(auth, email, password);
   };
 
+  // Forget Password:
+  const forgetPassword = (email) => {
+    return sendPasswordResetEmail(auth, email);
+  }
+
   const authInfo = {
     user,
     setUser,
     createNewUser,
     logOut,
     LogIn,
+    forgetPassword
   };
 
   return (
