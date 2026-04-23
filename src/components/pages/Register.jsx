@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
@@ -8,12 +8,22 @@ const Register = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const [errorName, setErrorName] = useState('');
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
     // get form data
     const form = new FormData(e.target);
     const name = form.get("name");
+
+    if(name.length < 4){
+      setErrorName({...errorName, name: 'Name is too short. Minimum 4 characters required.'});
+
+      e.target.name.value = '';
+      return;
+    }
+
     const email = form.get("email");
     const photoUrl = form.get("photo");
     const password = form.get("password");
@@ -24,6 +34,7 @@ const Register = () => {
         navigate(location.state?.from?.pathname || "/");
       })
       .catch((error) => {
+        e.target.reset();
         const errorCode = error.code;
         const errorMessage = error.message;
 
@@ -51,6 +62,14 @@ const Register = () => {
               className="input w-full bg-[#F3F3F3] placeholder:text-[#9F9F9F]"
               placeholder="Enter your name"
             />
+
+            {
+              errorName.name && <div>
+                <p className="text-red-500 text-center text-sm">
+                  {errorName.name}
+                </p>
+              </div>
+            }
 
             <label className="label text-lg font-semibold text-[#403F3F]">
               Photo URL

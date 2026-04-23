@@ -14,16 +14,15 @@ export const AuthContext = createContext();
 const auth = getAuth(app);
 
 const AuthProvider = ({ children }) => {
-
   // Auth Loading:
   const [authLoading, setAuthLoading] = useState(true);
 
   const [user, setUser] = useState(null);
 
-
   // Sign up new users:
   const createNewUser = (email, password) => {
-    setAuthLoading(true)
+    setAuthLoading(true);
+
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
@@ -41,13 +40,15 @@ const AuthProvider = ({ children }) => {
 
   // Log Out:
   const logOut = () => {
-    setAuthLoading(true)
+    setAuthLoading(true);
+
     return signOut(auth);
   };
 
   // Log in:
   const LogIn = (email, password) => {
-    setAuthLoading(true)
+    setAuthLoading(true);
+
     return signInWithEmailAndPassword(auth, email, password);
   };
 

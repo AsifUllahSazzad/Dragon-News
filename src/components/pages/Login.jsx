@@ -8,6 +8,8 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const [error, setError] = useState("");
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -18,21 +20,20 @@ const Login = () => {
     LogIn(email, password)
       .then((result) => {
         setUser(result.user);
-        navigate(location.state?.from?.pathname || '/');
+        navigate(location.state?.from?.pathname || "/");
       })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-
-        alert(errorCode);
+      .catch((err) => {
+        e.target.reset();
+        const errorCode = err.code;
+        setError({ ...error, login: errorCode });
       });
   };
 
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
 
-  const handleForgetPassword = (e) =>{
-    if(!email){
-          alert("Please enter your email first");
+  const handleForgetPassword = (e) => {
+    if (!email) {
+      alert("Please enter your email first");
       return;
     }
 
@@ -42,8 +43,8 @@ const Login = () => {
       })
       .catch((error) => {
         alert(error.message);
-      })
-  }
+      });
+  };
 
   return (
     <div className="min-h-screen flex justify-center items-center">
@@ -79,10 +80,22 @@ const Login = () => {
               placeholder="Enter your password"
             />
 
+            {error.login && (
+              <div>
+                <p className="text-red-500 text-center text-sm">
+                  {error.login}
+                </p>
+              </div>
+            )}
+
             <div>
               <button
-              type="button"
-              onClick={handleForgetPassword} className="link link-hover">Forgot password?</button>
+                type="button"
+                onClick={handleForgetPassword}
+                className="link link-hover"
+              >
+                Forgot password?
+              </button>
             </div>
 
             <button className="btn btn-neutral mt-4">Login</button>
@@ -90,9 +103,11 @@ const Login = () => {
         </div>
         <p className="text-center text-[#706F6F] font-semibold">
           Dont’t Have An Account ?{" "}
-          <Link to={"/auth/register"}
-          state={location.state}
-          className="text-red-400">
+          <Link
+            to={"/auth/register"}
+            state={location.state}
+            className="text-red-400"
+          >
             Register
           </Link>
         </p>
