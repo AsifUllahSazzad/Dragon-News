@@ -21,13 +21,13 @@ const Register = () => {
     createNewUser(email, password)
       .then((result) => {
         setUser(result.user);
-        navigate(location.state?.from?.pathname || '/');
+        navigate(location.state?.from?.pathname || "/");
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
 
-        console.log(errorCode, errorMessage);
+        alert(errorMessage);
       });
   };
 
@@ -89,9 +89,11 @@ const Register = () => {
         </div>
         <p className="text-center text-[#706F6F] font-semibold">
           Allready have an account?{" "}
-          <Link to={"/auth/login"} 
-          state={location.state}
-          className="text-red-400">
+          <Link
+            to={"/auth/login"}
+            state={location.state}
+            className="text-red-400"
+          >
             Login
           </Link>
         </p>
