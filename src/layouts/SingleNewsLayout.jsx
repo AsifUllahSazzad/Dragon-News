@@ -8,7 +8,6 @@ import QZone from "../components/QZone";
 import { Outlet } from "react-router-dom";
 
 const SingleNewsLayout = () => {
-    
   return (
     <div className="container mx-auto space-y-5">
       <header>
