@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 const NewsCard = ({ news = {} }) => {
   const { author, title, image_url, details, total_view, rating, _id } = news;
 
-
   return (
     <div className="card bg-base-100 shadow-md p-4 space-y-4">
       {/* Header */}
