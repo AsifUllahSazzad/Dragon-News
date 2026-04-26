@@ -6,6 +6,7 @@ import {
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut,
+  updateProfile,
 } from "firebase/auth";
 
 import app from "../firebase/firebase.config";
@@ -18,7 +19,7 @@ const AuthProvider = ({ children }) => {
   const [authLoading, setAuthLoading] = useState(true);
 
   const [user, setUser] = useState(null);
-
+  
   // Sign up new users:
   const createNewUser = (email, password) => {
     setAuthLoading(true);
@@ -57,6 +58,11 @@ const AuthProvider = ({ children }) => {
     return sendPasswordResetEmail(auth, email);
   };
 
+  // Update user profile:
+  const updateUserProfile = (updatedData) =>{
+    return updateProfile(auth.currentUser, updatedData);
+  }
+
   const authInfo = {
     user,
     setUser,
@@ -66,6 +72,7 @@ const AuthProvider = ({ children }) => {
     forgetPassword,
     authLoading,
     setAuthLoading,
+    updateUserProfile
   };
 
   return (

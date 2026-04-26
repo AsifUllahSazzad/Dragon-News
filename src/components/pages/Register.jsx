@@ -3,12 +3,12 @@ import { AuthContext } from "../Provider/AuthProvider";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Register = () => {
-  const { createNewUser, setUser } = useContext(AuthContext);
+  const { createNewUser, setUser, updateUserProfile } = useContext(AuthContext);
 
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [errorName, setErrorName] = useState('');
+  const [errorName, setErrorName] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -17,21 +17,31 @@ const Register = () => {
     const form = new FormData(e.target);
     const name = form.get("name");
 
-    if(name.length < 4){
-      setErrorName({...errorName, name: 'Name is too short. Minimum 4 characters required.'});
+    if (name.length < 4) {
+      setErrorName({
+        ...errorName,
+        name: "Name is too short. Minimum 4 characters required.",
+      });
 
-      e.target.name.value = '';
+      e.target.name.value = "";
       return;
     }
 
     const email = form.get("email");
-    const photoUrl = form.get("photo");
+    const photo = form.get("photo");
     const password = form.get("password");
 
     createNewUser(email, password)
       .then((result) => {
         setUser(result.user);
-        navigate(location.state?.from?.pathname || "/");
+
+        updateUserProfile({ displayName: name, photoURL: photo })
+          .then(() => {
+            navigate(location.state?.from?.pathname || "/");
+          })
+          .catch((error) => {
+            alert(error.code);
+          });
       })
       .catch((error) => {
         e.target.reset();
@@ -63,13 +73,13 @@ const Register = () => {
               placeholder="Enter your name"
             />
 
-            {
-              errorName.name && <div>
+            {errorName.name && (
+              <div>
                 <p className="text-red-500 text-center text-sm">
                   {errorName.name}
                 </p>
               </div>
-            }
+            )}
 
             <label className="label text-lg font-semibold text-[#403F3F]">
               Photo URL
